@@ -36,7 +36,7 @@ export default function StackPage() {
     <div className="flex flex-col items-center gap-5 pt-32 min-h-screen">
       <h1 className="text-3xl font-bold ">Stack Component</h1>
       <p className="text-2xl font-semibold">
-        Top Element: <samp className=" text-Royal">{stack.peek()}</samp>{" "}
+        Top Element: <samp className=" text-Royal">{stack.peek()}</samp>
       </p>
 
       <div>
@@ -76,7 +76,9 @@ export default function StackPage() {
         <p>Stack:</p>
         {stack.isEmpty() ? (
           <div className=" flex flex-col justify-center text-center items-center w-20 bg-Navy p-5 min-h-[300px] font-semibold text-2xl  rounded-xl ">
-            <p className="text-white rotate-90 h-full min-w-max ">Stack is empty</p>
+            <p className="text-white rotate-90 h-full min-w-max ">
+              Stack is empty
+            </p>
           </div>
         ) : (
           <ul className="flex flex-col-reverse text-center items-center justify-center w-20 gap-3 bg-Navy p-5 min-h-[300px] rounded-xl">

@@ -64,10 +64,10 @@ function MergeSortVisualization() {
 
   return (
     <div className="flex flex-col items-center gap-5 pt-32 min-h-screen">
-      <h1>Merge Sort Visualization</h1>
+      <h1 className="text-3xl font-bold ">Merge Sort Visualization</h1>
       <div className="flex flex-col gap-5 justify-center text-center items-center">
         <label>
-          <p>Enter comma-separated numbers:</p>
+          <p className="text-xl font-semibold pb-3">Enter comma-separated numbers:</p>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-x-slate-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             type="text"
