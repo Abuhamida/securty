@@ -1,7 +1,8 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "../../images/Logo.png";
+import Logo from "@/images/logo.png";
+
 export default function NavBar() {
   return <>
 
