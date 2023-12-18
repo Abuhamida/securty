@@ -57,7 +57,7 @@ export default function StackPage() {
           </p>
         ) : null}
 
-        <div className=" flex flex-row text-black items-center p-5 gap-4">
+        <div className=" flex flex-row justify-center text-black items-center p-5 gap-4">
           <button
             className=" bg-Royal hover:bg-Navy text-white font-bold py-2 px-4 rounded-full"
             onClick={handlePush}
