@@ -1,5 +1,5 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
 interface SearchStep {
   step: number;
@@ -8,17 +8,17 @@ interface SearchStep {
 
 export default function LinearSearchVisualization() {
   const [array, setArray] = useState<number[]>([]);
-  const [target, setTarget] = useState<string>('');
+  const [target, setTarget] = useState<string>("");
   const [steps, setSteps] = useState<SearchStep[]>([]);
-  const [inputArray, setInputArray] = useState<string>('');
+  const [inputArray, setInputArray] = useState<string>("");
 
   const generateArray = () => {
     const newArray = inputArray
-      .split(',')
+      .split(",")
       .map((element) => parseInt(element.trim()) || 0); // Ensure to parse and handle NaN
     setArray(newArray); // Set the array for linear search
     setSteps([]); // Clear previous steps
-    setTarget('');
+    setTarget("");
   };
 
   const linearSearch = () => {
@@ -48,7 +48,7 @@ export default function LinearSearchVisualization() {
     <div className="flex flex-col justify-center items-center gap-5 pt-32 min-h-screen">
       <h1 className="text-3xl font-bold">Linear Search Visualization</h1>
 
-      <div className='flex flex-col justify-center items-center'>
+      <div className="flex flex-col justify-center items-center">
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
           Enter Array Elements (comma-separated)
         </label>
@@ -107,14 +107,22 @@ export default function LinearSearchVisualization() {
         <p>Linear Search Steps:</p>
         <ul className="flex flex-col justify-center text-center items-center gap-6">
           {steps.map((step) => (
-            <li className='flex flex-col items-center' key={step.step}>
-              <div>Step {step.step}:{" "}
-              <samp className=" bg-Baby text-Navy text-xl p-3 rounded-md">
-                Current Index: {step.currentIndex}
-              </samp></div>
-              
-              { array[step.currentIndex] === parseInt(target) ? (
-                <div className='w-96 text-center flex flex-col items-center  mt-2'>  <p className=' text-xl  mt-6 bg-Baby p-2 rounded-md'>The Target is found at position → <samp className='text-Royal'>{step.currentIndex + 1}</samp> </p> </div>
+            <li className="flex flex-col items-center" key={step.step}>
+              <div>
+                Step {step.step}:{" "}
+                <samp className=" bg-Baby text-Navy text-xl p-3 rounded-md">
+                  Current Index: {step.currentIndex}
+                </samp>
+              </div>
+
+              {array[step.currentIndex] === parseInt(target) ? (
+                <div className="w-96 text-center flex flex-col items-center  mt-2">
+                  {" "}
+                  <p className=" text-xl  mt-6 bg-Baby p-2 rounded-md">
+                    The Target is found at position →{" "}
+                    <samp className="text-Royal">{step.currentIndex + 1}</samp>{" "}
+                  </p>{" "}
+                </div>
               ) : null}
             </li>
           ))}
