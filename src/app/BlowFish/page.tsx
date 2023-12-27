@@ -58,23 +58,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    // Trigger download when decryptedData is set
-    if (decryptedData && inputData.startsWith("data:image")) {
-      const blob = new Blob([decryptedData], { type: "image/png" });
 
-      // Create or update the download link
-      if (!downloadLinkRef.current) {
-        downloadLinkRef.current = document.createElement("a");
-        document.body.appendChild(downloadLinkRef.current);
-      }
-
-      const downloadLink = downloadLinkRef.current;
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = "decrypted_image.png";
-      downloadLink.click();
-    }
-  }, [decryptedData, inputData]);
 
   const handleDecrypt = () => {
     if (encryptedData && inputKey) {
