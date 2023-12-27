@@ -3,44 +3,10 @@
 const crypto = require("crypto");
 
 // Key must be 32 characters long
+import Encrypt from "./encrypte";
+import Decrypt from "./decrypt";
 
-async function encrypt(data: any, isImage = false, inputKey: any) {
-  const cipher = crypto.createCipher("aes-256-cbc", inputKey);
 
-  if (isImage) {
-    // If data is an image, fetch it and convert the response to a buffer
-    const response = await fetch(data);
-    const buffer = await response.arrayBuffer();
-    data = Buffer.from(buffer);
-  }
-
-  let encrypted = cipher.update(data, isImage ? null : "utf8", "hex");
-  encrypted += cipher.final("hex");
-
-  if (isImage) {
-    // Handle saving encrypted data for images if needed
-  }
-
-  return encrypted;
-}
-
-function decrypt(data: any, inputKey: any, isImage = false) {
-  const decipher = crypto.createDecipher("aes-256-cbc", inputKey);
-
-  let decrypted;
-  if (isImage) {
-    const encryptedBuffer = Buffer.from(data, "hex");
-    decrypted = Buffer.concat([
-      decipher.update(encryptedBuffer),
-      decipher.final(),
-    ]);
-  } else {
-    decrypted = decipher.update(data, "hex", "utf8");
-    decrypted += decipher.final("utf8");
-  }
-
-  return decrypted;
-}
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
@@ -52,7 +18,7 @@ export default function Home() {
 
   const handleEncrypt = async (isImage = false) => {
     if (inputData && inputKey) {
-      const encrypted = await encrypt(inputData, isImage, inputKey);
+      const encrypted = await Encrypt(inputData, isImage, inputKey);
       setEncryptedData(encrypted);
       setInputData(encrypted);
     }
@@ -60,7 +26,7 @@ export default function Home() {
 
   const handleDecrypt = () => {
     if (encryptedData && inputKey) {
-      const decrypted = decrypt(
+      const decrypted = Decrypt(
         encryptedData,
         inputKey,
         inputData.startsWith("data:image")
