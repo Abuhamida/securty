@@ -7,20 +7,20 @@ import Encrypt from "./encrypte";
 import Decrypt from "./decrypt";
 
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [inputData, setInputData] = useState("");
   const [inputKey, setInputKey] = useState("");
   const [encryptedData, setEncryptedData] = useState("");
   const [decryptedData, setDecryptedData] = useState("");
-  const downloadLinkRef = useRef(null);
 
   const handleEncrypt = async (isImage = false) => {
     if (inputData && inputKey) {
       const encrypted = await Encrypt(inputData, isImage, inputKey);
       setEncryptedData(encrypted);
-      setInputData(encrypted);
+      setInputData(encrypted)
     }
   };
 
@@ -31,6 +31,7 @@ export default function Home() {
         inputKey,
         inputData.startsWith("data:image")
       );
+      setInputData(decrypted)
       setDecryptedData(decrypted);
     }
   };
@@ -44,6 +45,7 @@ export default function Home() {
   };
 
   const isDataUrl = (str: any) => /^data:.+/.test(str);
+  const isBlobUrl = (str: any) => /^blob:.+/.test(str);
 
   return (
     <div className="flex flex-col items-center gap-5 pt-32 min-h-screen">
@@ -78,7 +80,7 @@ export default function Home() {
         />
       </label>
       <br />
-      <div className="flex gap-3 items-center">
+      <div  className="flex gap-3 items-center">
         <button
           className="bg-Royal hover:bg-Navy text-white font-bold py-2 px-4 rounded-full"
           onClick={() => handleEncrypt(inputData.startsWith("data:image"))}
@@ -94,22 +96,16 @@ export default function Home() {
       </div>
 
       <br />
-      {encryptedData && (
-        <p className=" text-2xl font-bold">
-          Encrypted data:{" "}
-          <samp className="  text-Royal text-xl font-semibold">
-            {encryptedData}
-          </samp>{" "}
-        </p>
-      )}
+      {encryptedData && <p className=" text-2xl font-bold">Encrypted data: <samp className="  text-Royal text-xl font-semibold">{encryptedData}</samp> </p>}
       {decryptedData && (
         <>
-          <p className="max-w-screen-md text-2xl font-bold">
-            Decrypted data: <br />
-            <samp className="max-w-screen-md text-Royal text-xl font-semibold">
-              {decryptedData}
-            </samp>{" "}
-          </p>
+          <p className=" max-w-screen-md text-2xl font-bold">Decrypted data: <br/><samp className="max-w-screen-md text-Royal text-xl font-semibold">{decryptedData}</samp> </p>
+          {isDataUrl(decryptedData) && (
+            <Image src={decryptedData} width={500} height={500} alt="Decrypted Image" />
+          )}
+          {isBlobUrl(decryptedData) && (
+            <Image src={decryptedData} width={500} height={500} alt="Decrypted Image" />
+          )}
         </>
       )}
     </div>
