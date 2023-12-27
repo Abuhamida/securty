@@ -4,7 +4,7 @@ const crypto = require("crypto");
 
 // Key must be 32 characters long
 
-export async function encrypt(data: any, isImage = false, inputKey: any) {
+async function encrypt(data: any, isImage = false, inputKey: any) {
   const cipher = crypto.createCipher("aes-256-cbc", inputKey);
 
   if (isImage) {
@@ -24,7 +24,7 @@ export async function encrypt(data: any, isImage = false, inputKey: any) {
   return encrypted;
 }
 
-export function decrypt(data: any, inputKey: any, isImage = false) {
+function decrypt(data: any, inputKey: any, isImage = false) {
   const decipher = crypto.createDecipher("aes-256-cbc", inputKey);
 
   let decrypted;
@@ -57,8 +57,6 @@ export default function Home() {
       setInputData(encrypted);
     }
   };
-
-
 
   const handleDecrypt = () => {
     if (encryptedData && inputKey) {
