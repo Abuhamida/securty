@@ -32,10 +32,7 @@ export default function Home() {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover the Last-In, First-Out (LIFO) behavior of stacks in data
-            structures.
-          </p>
+          
         </a>
 
         <a
@@ -49,10 +46,7 @@ export default function Home() {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the First-In, First-Out (FIFO) nature of queues, crucial
-            elements in computer science.
-          </p>
+         
         </a>
 
         <a
@@ -66,10 +60,7 @@ export default function Home() {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about search algorithms, essential methods for locating
-            specific items within datasets.
-          </p>
+         
         </a>
 
         <a
@@ -83,10 +74,7 @@ export default function Home() {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Dive into the intricacies of sorting algorithms, crucial tools for
-            arranging elements in a specific order within datasets.
-          </p>
+         
         </a>
       </div>
     </main>
