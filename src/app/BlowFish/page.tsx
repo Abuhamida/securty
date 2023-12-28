@@ -6,7 +6,6 @@ const crypto = require("crypto");
 import Encrypt from "./encrypte";
 import Decrypt from "./decrypt";
 
-
 import { useState } from "react";
 import Image from "next/image";
 
@@ -20,19 +19,31 @@ export default function Home() {
     if (inputData && inputKey) {
       const encrypted = await Encrypt(inputData, isImage, inputKey);
       setEncryptedData(encrypted);
-      setInputData(encrypted)
+      setInputData(encrypted);
     }
   };
 
   const handleDecrypt = () => {
-    if (encryptedData && inputKey) {
-      const decrypted = Decrypt(
+    if ((encryptedData && inputKey) ||( inputData && inputKey)) {
+      if  (encryptedData){
+        const decrypted = Decrypt(
         encryptedData,
         inputKey,
         inputData.startsWith("data:image")
       );
-      setInputData(decrypted)
+      setInputData(decrypted);
       setDecryptedData(decrypted);
+      }
+      else{
+        const decrypted = Decrypt(
+          inputData,
+          inputKey,
+          inputData.startsWith("data:image")
+        );
+        setInputData(decrypted);
+        setDecryptedData(decrypted);
+      }
+      
     }
   };
 
@@ -48,7 +59,7 @@ export default function Home() {
   const isBlobUrl = (str: any) => /^blob:.+/.test(str);
 
   return (
-    <div className="flex flex-col items-center gap-5 pt-32 min-h-screen">
+    <div className="flex flex-col justify-center text-center  items-center gap-5 pt-32 min-h-screen">
       <h1 className="text-3xl font-bold ">Blowfish Algorithm</h1>
       <label>
         Upload Image:
@@ -62,9 +73,8 @@ export default function Home() {
       <br />
       <label>
         Enter text or image URL:
-        <input
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-x-slate-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-          type="text"
+        <textarea
+          className="appearance-none block w-96 h-32 bg-gray-200 text-gray-700 border border-x-slate-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
           value={inputData}
           onChange={(e) => setInputData(e.target.value)}
         />
@@ -80,7 +90,7 @@ export default function Home() {
         />
       </label>
       <br />
-      <div  className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center">
         <button
           className="bg-Royal hover:bg-Navy text-white font-bold py-2 px-4 rounded-full"
           onClick={() => handleEncrypt(inputData.startsWith("data:image"))}
@@ -96,15 +106,41 @@ export default function Home() {
       </div>
 
       <br />
-      {encryptedData && <p className=" text-2xl font-bold">Encrypted data: <samp className="  text-Royal text-xl font-semibold">{encryptedData}</samp> </p>}
+      <div className="">
+  {encryptedData && (
+    <>
+      <p className="text-2xl font-bold">Encrypted data: </p>
+      <samp className="text-Royal text-xl font-semibold ">
+        {encryptedData}
+      </samp>
+    </>
+  )}
+</div>
+
+
       {decryptedData && (
         <>
-          <p className=" max-w-screen-md text-2xl font-bold">Decrypted data: <br/><samp className="max-w-screen-md text-Royal text-xl font-semibold">{decryptedData}</samp> </p>
+          <p className=" max-w-screen-md text-2xl font-bold">
+            Decrypted data: <br />
+            <samp className="max-w-screen-md text-Royal text-xl font-semibold">
+              {decryptedData}
+            </samp>{" "}
+          </p>
           {isDataUrl(decryptedData) && (
-            <Image src={decryptedData} width={500} height={500} alt="Decrypted Image" />
+            <Image
+              src={decryptedData}
+              width={500}
+              height={500}
+              alt="Decrypted Image"
+            />
           )}
           {isBlobUrl(decryptedData) && (
-            <Image src={decryptedData} width={500} height={500} alt="Decrypted Image" />
+            <Image
+              src={decryptedData}
+              width={500}
+              height={500}
+              alt="Decrypted Image"
+            />
           )}
         </>
       )}
