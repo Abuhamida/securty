@@ -9,10 +9,10 @@ export default function NavBar() {
   <div className=" h-10 bg-Navy w-full fixed shadow-xl  flex flex-row  justify-around gap-96 items-center text-center p-10">
 <div className=" text-white font-bold"> <Link  href="/" > <Image src={Logo} width={60} alt="Logo"></Image> </Link></div>
 <div className=" text-white font-bold flex flex-row gap-6" >
-    <Link className=" hover:text-Baby hover:border-b-2" href={'/stack'}> DES </Link>
+    <Link className=" hover:text-Baby hover:border-b-2" href={'/'}> DES </Link>
     <Link className=" hover:text-Baby hover:border-b-2"  href={'/BlowFish'}> BlowFish </Link>
-    <Link className=" hover:text-Baby hover:border-b-2"  href={'/search'}> AES </Link>
-    <Link className=" hover:text-Baby hover:border-b-2"  href={'/sort'}> Classic </Link>
+    <Link className=" hover:text-Baby hover:border-b-2"  href={'/AES'}> AES </Link>
+    <Link className=" hover:text-Baby hover:border-b-2"  href={'/'}> Classic </Link>
 
 </div>
 </div>

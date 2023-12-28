@@ -1,26 +1,22 @@
-const crypto = require('crypto');
+const Blowfish = require('blowfish-node');
+const bf = new Blowfish('asdfghjk', Blowfish.MODE.ECB, Blowfish.PADDING.NULL); // only key isn't optional
+bf.setIv('abcdefgh'); // optional for ECB mode; bytes length should be equal 8
 
-// Key must be 32 characters long
-const key = 'asdfghjk';
+const encoded = bf.encode('input text even with emoji 🎅');
+const decoded = bf.decode(encoded);
+const uint8Array = new Uint8Array([
+    247, 223, 191, 112,   8,  65, 182,
+     19, 238,  77, 249, 160,  46, 178,
+     84, 229, 176, 244, 214, 125, 233,
+    137,  87, 133,  70, 187, 185, 229,
+    201, 204,  53, 241
+]);
 
-function encrypt(data) {
- const cipher = crypto.createCipher('aes-256-cbc', key);
- let encrypted = cipher.update(data, 'utf8', 'hex');
- encrypted += cipher.final('hex');
- return encrypted;
-}
+// Create an ArrayBuffer from the Uint8Array
+const arrayBuffer = uint8Array.buffer;
 
-function decrypt(data) {
- const decipher = crypto.createDecipher('aes-256-cbc', key);
- let decrypted = decipher.update(data, 'hex', 'utf8');
- decrypted += decipher.final('utf8');
- return decrypted;
-}
 
-const data = 'Hello, world!';
-const encryptedData = encrypt(data);
-const decryptedData = decrypt(encryptedData);
+const response = bf.decode(arrayBuffer);
 
-console.log('Original data:', data);
-console.log('Encrypted data:', encryptedData);
-console.log('Decrypted data:', decryptedData);
+console.log(response)
+// console.log(encoded,decoded)

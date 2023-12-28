@@ -1,20 +1,31 @@
-const crypto = require("crypto");
+const Blowfish = require('blowfish-node');
+
 export default async function Encrypt(data: any, isImage = false, inputKey: any) {
-    const cipher = crypto.createCipher("aes-256-cbc", inputKey);
-  
-    if (isImage) {
-      // If data is an image, fetch it and convert the response to a buffer
-      const response = await fetch(data);
-      const buffer = await response.arrayBuffer();
-      data = Buffer.from(buffer);
-    }
-  
-    let encrypted = cipher.update(data, isImage ? null : "utf8", "hex");
-    encrypted += cipher.final("hex");
-  
-    if (isImage) {
-      // Handle saving encrypted data for images if needed
-    }
-  
-    return encrypted;
+  // Convert the input key to a Buffer
+  const keyBuffer = Buffer.from(inputKey, 'utf-8');
+
+  // Create a Blowfish instance
+  const bf = new Blowfish(keyBuffer, Blowfish.MODE.ECB, Blowfish.PADDING.NULL);
+
+  // Set an optional initialization vector (IV) for CBC mode
+  bf.setIv('abcdefgh'); // Replace with your actual IV
+
+  if (isImage) {
+    // If data is an image, convert it to a Buffer
+    data = Buffer.from(data, 'binary');
   }
+
+  // Perform the encryption
+  const encryptedDataBuffer = bf.encode(data);
+
+  // Convert the encrypted data buffer to a hex string
+  const encryptedData = encryptedDataBuffer.toString('hex');
+
+  console.log('Encrypted:', encryptedData);
+
+  if (isImage) {
+    // Handle saving encrypted data for images if needed
+  }
+
+  return encryptedData;
+}

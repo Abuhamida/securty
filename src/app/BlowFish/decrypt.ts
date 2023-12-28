@@ -1,19 +1,26 @@
-const crypto = require("crypto");
+const Blowfish = require("blowfish-node");
 
 export default function Decrypt(data: any, inputKey: any, isImage = false) {
-    const decipher = crypto.createDecipher("aes-256-cbc", inputKey);
-  
-    let decrypted;
-    if (isImage) {
-      const encryptedBuffer = Buffer.from(data, "hex");
-      decrypted = Buffer.concat([
-        decipher.update(encryptedBuffer),
-        decipher.final(),
-      ]);
-    } else {
-      decrypted = decipher.update(data, "hex", "utf8");
-      decrypted += decipher.final("utf8");
-    }
-  
-    return decrypted;
+  console.log(data);
+  const bf = new Blowfish(inputKey, Blowfish.MODE.ECB, Blowfish.PADDING.NULL); // only key isn't optional
+  bf.setIv("abcdefgh"); // optional for ECB mode; bytes length should be equal 8
+  const dataArray = data.split(",").map(Number);
+
+  const uint8Array = new Uint8Array(dataArray);
+
+  // Create an ArrayBuffer from the Uint8Array
+  const arrayBuffer = uint8Array.buffer;
+
+
+  let decrypted;
+
+  if (isImage) {
+    // Convert the string to an array of numbers
+    decrypted = bf.decode(arrayBuffer);
+  } else {
+    decrypted = bf.decode(arrayBuffer);
   }
+  console.log(decrypted);
+
+  return decrypted; //
+}
